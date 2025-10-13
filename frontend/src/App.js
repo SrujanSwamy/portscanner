@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
+// Import from the new export file
+import { exportToCSV, exportToJSON } from './utils/export';
 
 function App() {
     const [targetIp, setTargetIp] = useState('');
@@ -37,30 +39,7 @@ function App() {
             setIsLoading(false);
         }
     };
-
-    const exportToCSV = () => {
-        const headers = 'Port,Status,Latency (ms)\n';
-        const rows = results.map(r => `${r.port},${r.status},${r.latency_ms || 'N/A'}`).join('\n');
-        const csvContent = "data:text/csv;charset=utf-8," + headers + rows;
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `scan_results_${targetIp}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
-    const exportToJSON = () => {
-        const jsonContent = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(results, null, 2));
-        const link = document.createElement("a");
-        link.setAttribute("href", jsonContent);
-        link.setAttribute("download", `scan_results_${targetIp}.json`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
+    
     return (
         <div className="App">
             <header className="App-header">
@@ -124,10 +103,12 @@ function App() {
                     <div className="results-header">
                         <h2>Scan Results for {targetIp}</h2>
                         <div className="export-buttons">
-                            <button onClick={exportToCSV}>Export CSV</button>
-                            <button onClick={exportToJSON}>Export JSON</button>
+                            {/* Call the imported functions directly */}
+                            <button onClick={() => exportToCSV(results, targetIp)}>Export CSV</button>
+                            <button onClick={() => exportToJSON(results, targetIp)}>Export JSON</button>
                         </div>
                     </div>
+                    
                     <table className="results-table">
                         <thead>
                             <tr>

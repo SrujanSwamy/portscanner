@@ -1,33 +1,34 @@
-from scapy.all import sr1, IP, TCP, ICMP
+from scapy.all import sr1, IP, TCP, ICMP, IPv6, ICMPv6DestUnreach
 import logging
+import ipaddress
 
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
 def ack_scan(target_ip, port):
     """
-    Performs a TCP ACK scan on a single port.
-    Follows the logic from DFD 0.3.2.6.
-    Requires root/administrator privileges.
+    Performs a TCP ACK scan, supporting both IPv4 and IPv6.
     """
     try:
-        # DFD 0.3.2.6.2 & 0.3.2.6.3: Generate and Send ACK probe
-        ip_packet = IP(dst=target_ip)
-        tcp_packet = TCP(dport=port, flags="A") # "A" for ACK flag
+        # Detect IP version and build the correct packet
+        ip_addr = ipaddress.ip_address(target_ip)
+        if ip_addr.version == 4:
+            ip_packet = IP(dst=target_ip)
+        else:
+            ip_packet = IPv6(dst=target_ip)
+
+        tcp_packet = TCP(dport=port, flags="A") # "A" for ACK
         packet = ip_packet / tcp_packet
         
         response = sr1(packet, timeout=2, verbose=0)
 
-        # DFD 0.3.2.6.6 & 0.3.2.6.7: Analyze Response and Determine Firewall Status
         if response is None:
-            # If no response, port is filtered by a stateful firewall
             return {"port": port, "status": "Filtered"}
             
-        if response.haslayer(TCP) and response.getlayer(TCP).flags == 0x4: # RST flag
-            # If RST is received, port is not filtered (unfiltered)
+        if response.haslayer(TCP) and response.getlayer(TCP).flags == 0x4: # RST
             return {"port": port, "status": "Unfiltered"}
             
-        if response.haslayer(ICMP):
-             # Some firewalls might respond with ICMP errors
+        # Check for ICMPv4 or ICMPv6 Destination Unreachable messages
+        if response.haslayer(ICMP) or response.haslayer(ICMPv6DestUnreach):
             return {"port": port, "status": "Filtered"}
 
         return {"port": port, "status": "Filtered"}

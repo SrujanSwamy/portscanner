@@ -1,23 +1,26 @@
-from scapy.all import sr1, IP, TCP
+from scapy.all import sr1, IP, TCP, IPv6
 import logging
+import ipaddress
 
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
 def window_scan(target_ip, port):
     """
-    Performs a TCP Window scan on a single port.
-    Follows the logic from DFD 0.3.2.7.
-    Requires root/administrator privileges.
+    Performs a TCP Window scan, supporting both IPv4 and IPv6.
     """
     try:
-        # DFD 0.3.2.7.2 & 0.3.2.7.3: Create and Send ACK Packet
-        ip_packet = IP(dst=target_ip)
+        # Detect IP version and build the correct packet
+        ip_addr = ipaddress.ip_address(target_ip)
+        if ip_addr.version == 4:
+            ip_packet = IP(dst=target_ip)
+        else:
+            ip_packet = IPv6(dst=target_ip)
+
         tcp_packet = TCP(dport=port, flags="A")
         packet = ip_packet / tcp_packet
 
         response = sr1(packet, timeout=2, verbose=0)
 
-        # DFD 0.3.2.7.5 to 0.3.2.7.8: Analyze TCP Window and Classify Port State
         if response is not None and response.haslayer(TCP):
             if response.getlayer(TCP).window > 0:
                 return {"port": port, "status": "Open"}
