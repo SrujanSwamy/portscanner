@@ -65,7 +65,7 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <h1>Network Port Scanner</h1>
-                <p>A tool for educational purposes, implemented from scratch.</p>
+               
             </header>
 
             <form onSubmit={handleSubmit} className="scan-form">
