@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
 // Import from the new export file
-import { exportToCSV, exportToJSON } from './utils/export';
+import { exportToCSV, exportToJSON } from './utils/export_results/export';
 
 function App() {
     const [targetIp, setTargetIp] = useState('');

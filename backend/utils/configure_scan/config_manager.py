@@ -1,16 +1,16 @@
 # Import scanner functions so we can map to them
-from scanners.tcp_connect_scan import connect_scan
-from scanners.tcp_syn_scan import syn_scan
-from scanners.tcp_fin_scan import fin_scan
-from scanners.tcp_xmas_scan import xmas_scan
-from scanners.tcp_null_scan import null_scan
-from scanners.tcp_ack_scan import ack_scan
-from scanners.tcp_window_scan import window_scan
-from scanners.udp_scan import udp_scan
-from scanners.idle_scan import idle_scan
+from scanners.con_syn_fin.tcp_connect_scan import connect_scan
+from scanners.con_syn_fin.tcp_syn_scan import syn_scan
+from scanners.con_syn_fin.tcp_fin_scan import fin_scan
+from scanners.xmas_null_ack.tcp_xmas_scan import xmas_scan
+from scanners.xmas_null_ack.tcp_null_scan import null_scan
+from scanners.xmas_null_ack.tcp_ack_scan import ack_scan
+from scanners.win_idle_udp.tcp_window_scan import window_scan
+from scanners.win_idle_udp.udp_scan import udp_scan
+from scanners.win_idle_udp.idle_scan import idle_scan
 
 # Import validators to use them here
-from .validators import parse_ports, validate_ip_address
+from utils.input_validation.validators import parse_ports, validate_ip_address
 
 def configure_scan(request_data):
     """

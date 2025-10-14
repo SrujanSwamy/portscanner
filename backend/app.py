@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 # Import the new config manager
-from utils.config_manager import configure_scan
+from utils.configure_scan.config_manager import configure_scan
 
 app = Flask(__name__)
 CORS(app)
@@ -33,7 +33,8 @@ def scan():
 
     return jsonify(results)
 
-if __name__ == '_main_':
+
+if __name__ == '__main__':
     print("Starting Flask server on http://127.0.0.1:5000")
     print("IMPORTANT: This server must be run with 'sudo' for scans requiring raw sockets.")
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='::', port=5000)
