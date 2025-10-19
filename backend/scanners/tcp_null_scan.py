@@ -10,9 +10,19 @@ def null_scan(target_ip, port):
     Requires root/administrator privileges.
     """
     try:
+<<<<<<< Updated upstream:backend/scanners/tcp_null_scan.py
         # DFD 0.3.2.5.2: Create Zero-Flag Packet
         ip_packet = IP(dst=target_ip)
         tcp_packet = TCP(dport=port, flags="") # Empty string for no flags
+=======
+        ip_addr = ipaddress.ip_address(target_ip)
+        if ip_addr.version == 4:
+            ip_packet = IP(dst=target_ip)
+        else:
+            ip_packet = IPv6(dst=target_ip)
+
+        tcp_packet = TCP(dport=port, flags="") # No flags
+>>>>>>> Stashed changes:backend/scanners/xmas_null_ack/tcp_null_scan.py
         packet = ip_packet / tcp_packet
 
         # DFD 0.3.2.5.3: Dispatch Packet
@@ -22,7 +32,7 @@ def null_scan(target_ip, port):
         if response is None:
             return {"port": port, "status": "Open|Filtered"}
         
-        if response.haslayer(TCP) and response.getlayer(TCP).flags == 0x14: # RST/ACK
+        if response.haslayer(TCP) and response.getlayer(TCP).flags == 0x14: 
             return {"port": port, "status": "Closed"}
 
         return {"port": port, "status": "Filtered"}

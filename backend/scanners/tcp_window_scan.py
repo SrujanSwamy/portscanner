@@ -10,8 +10,17 @@ def window_scan(target_ip, port):
     Requires root/administrator privileges.
     """
     try:
+<<<<<<< Updated upstream:backend/scanners/tcp_window_scan.py
         # DFD 0.3.2.7.2 & 0.3.2.7.3: Create and Send ACK Packet
         ip_packet = IP(dst=target_ip)
+=======
+        ip_addr = ipaddress.ip_address(target_ip)
+        if ip_addr.version == 4:
+            ip_packet = IP(dst=target_ip)
+        else:
+            ip_packet = IPv6(dst=target_ip)
+
+>>>>>>> Stashed changes:backend/scanners/win_idle_udp/tcp_window_scan.py
         tcp_packet = TCP(dport=port, flags="A")
         packet = ip_packet / tcp_packet
 

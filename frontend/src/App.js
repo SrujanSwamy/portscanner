@@ -64,10 +64,21 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
+<<<<<<< Updated upstream
                 <h1>Network Port Scanner</h1>
                
+=======
+                <h1>IMPLEMENTATION OF PORT SCANNING TECHNIQUES</h1>
+>>>>>>> Stashed changes
             </header>
 
+            <div className="Contributors">
+                <p>Carried out by:</p>
+                <p>Anirudh S (231IT006) </p>
+                <p>Siddharth K (231IT071)</p>
+                <p>Srujan Swamy (231IT079)</p>
+            </div>
+            
             <form onSubmit={handleSubmit} className="scan-form">
                 <div className="form-group">
                     <label htmlFor="targetIp">Target IP Address</label>
