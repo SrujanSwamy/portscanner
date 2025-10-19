@@ -1,4 +1,3 @@
-# Import scanner functions so we can map to them
 from scanners.con_syn_fin.tcp_connect_scan import connect_scan
 from scanners.con_syn_fin.tcp_syn_scan import syn_scan
 from scanners.con_syn_fin.tcp_fin_scan import fin_scan
@@ -23,7 +22,7 @@ def configure_scan(request_data):
     scan_type = request_data.get('scan_type')
     zombie_ip = request_data.get('zombie_ip')
 
-    # --- Step 1: Validate Inputs ---
+    # Validate Inputs
     if not all([target_ip, port_string, scan_type]):
         raise ValueError("Missing required fields: target_ip, ports, scan_type")
     
@@ -34,7 +33,7 @@ def configure_scan(request_data):
     if not ports_to_scan:
         raise ValueError("No valid ports specified")
 
-    # --- Step 2: Select Scanner (The Core of Configuration) ---
+    # Select Scanner (The Core of Configuration)
     scan_functions = {
         "TCP Connect": connect_scan,
         "TCP SYN": syn_scan,
@@ -51,11 +50,11 @@ def configure_scan(request_data):
     if not selected_scanner:
         raise ValueError("Invalid scan type")
     
-    # --- Step 3: Handle Scan-Specific Configuration ---
+    # Handle Scan-Specific Configuration
     if scan_type == "Idle" and not zombie_ip:
         raise ValueError("Zombie IP is required for Idle Scan")
 
-    # --- Step 4: Return the Final Configuration Object ---
+    # Return the Final Configuration Object
     return {
         'target_ip': target_ip,
         'ports_to_scan': ports_to_scan,

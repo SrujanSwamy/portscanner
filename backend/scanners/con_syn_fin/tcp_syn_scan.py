@@ -1,5 +1,3 @@
-# backend/scanners/tcp_syn_scan.py
-
 # MODIFICATION: Import IPv6 and ipaddress
 from scapy.all import sr1, IP, TCP, IPv6
 import logging

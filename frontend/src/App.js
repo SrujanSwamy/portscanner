@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
-// Import from the new export file
+
 import { exportToCSV, exportToJSON } from './utils/export_results/export';
 
 function App() {
@@ -43,9 +43,14 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Network Port Scanner</h1>
-                <p>A tool for educational purposes, implemented from scratch.</p>
+                <h1>IMPLEMENTATION OF PORT SCANNING TECHNIQUES</h1>
             </header>
+            <div className="Contributors">
+                <p>Carried out by:</p>
+                <p>Anirudh S (231IT006) </p>
+                <p>Siddharth K (231IT071)</p>
+                <p>Srujan Swamy (231IT079)</p>
+            </div>
 
             <form onSubmit={handleSubmit} className="scan-form">
                 <div className="form-group">

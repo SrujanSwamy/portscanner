@@ -32,6 +32,16 @@ body {
     font-size: 0.9em;
 }
 
+.Contributors {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 0.9em;
+    color: #0056b3;
+}
+.Contributors p {
+    font-size: medium;
+}
+
 .scan-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
