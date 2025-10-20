@@ -23,6 +23,9 @@ def fin_scan(target_ip, port):
             ip_packet = IPv6(dst=target_ip)
 
         tcp_packet = TCP(dport=port, flags="F") 
+<<<<<<< Updated upstream:backend/scanners/tcp_fin_scan.py
+>>>>>>> Stashed changes:backend/scanners/con_syn_fin/tcp_fin_scan.py
+=======
 >>>>>>> Stashed changes:backend/scanners/con_syn_fin/tcp_fin_scan.py
         packet = ip_packet / tcp_packet
 

@@ -70,9 +70,13 @@ def scan():
          return jsonify({"error": "Invalid target IP address format"}), 400
 
     try:
+<<<<<<< Updated upstream
         ports_to_scan = parse_ports(port_string)
         if not ports_to_scan:
             return jsonify({"error": "No valid ports specified"}), 400
+=======
+        scan_config = configure_scan(request.json)
+>>>>>>> Stashed changes
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     
@@ -98,6 +102,15 @@ def scan():
         return jsonify({"error": "Zombie IP is required for Idle Scan"}), 400
 
     results = []
+<<<<<<< Updated upstream
+=======
+    
+    # Use the prepared config object
+    target_ip = scan_config['target_ip']
+    ports_to_scan = scan_config['ports_to_scan']
+    selected_scanner = scan_config['selected_scanner']
+    
+>>>>>>> Stashed changes
     for port in ports_to_scan:
         if scan_type == "Idle":
             result = selected_scanner(target_ip, port, zombie_ip)
