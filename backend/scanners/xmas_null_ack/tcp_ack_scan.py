@@ -19,12 +19,13 @@ def ack_scan(target_ip, port):
         tcp_packet = TCP(dport=port, flags="A") # "A" for ACK
         packet = ip_packet / tcp_packet
         
-        response = sr1(packet, timeout=2, verbose=0)
+        response = sr1(packet, timeout=5, verbose=0,iface="Wi-Fi")
 
         if response is None:
             return {"port": port, "status": "Filtered"}
-            
-        if response.haslayer(TCP) and response.getlayer(TCP).flags == 0x4: # RST
+        
+        tcp = response.getlayer(TCP)
+        if response.haslayer(TCP) and (int(tcp.flags) & 0x04): # RST
             return {"port": port, "status": "Unfiltered"}
             
         # Check for ICMPv4 or ICMPv6 Destination Unreachable messages
@@ -34,4 +35,5 @@ def ack_scan(target_ip, port):
         return {"port": port, "status": "Filtered"}
 
     except Exception:
-        return {"port": port, "status": "Error"}
+        logging.exception("ack_scan failed")
+        return {"port": port, "status": "Error", "error": str(e)}

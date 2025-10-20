@@ -21,7 +21,7 @@ def syn_scan(target_ip, port):
         packet = ip_packet / tcp_packet
         
         # The rest of the logic remains the same
-        response = sr1(packet, timeout=1, verbose=0)
+        response = sr1(packet, timeout=4, verbose=0)
 
         if response is None:
             return {"port": port, "status": "Filtered"}
