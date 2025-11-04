@@ -1,0 +1,8 @@
+#
+# Backend dependencies (versions pinned for reproducibility)
+#
+Flask==2.2.2       # Web framework for API
+Flask-Cors==3.0.10 # CORS support for cross-origin requests
+scapy==2.5.0       # Packet crafting/scanning (may require elevated privileges)
+bcrypt==5.0.0      # Password hashing
+PyJWT==2.8.0       # JWT token encoding/decoding

@@ -1,0 +1,72 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-links a,
+.nav-links .nav-button {
+  color: #93c5fd;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links .nav-button:hover {
+  color: #fff;
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.nav-links a.active {
+  color: #fff;
+  font-weight: 600;
+}
+
+.nav-links .nav-button {
+  color: #fca5a5;
+}
+
+.nav-links .nav-button:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fecaca;
+}
+
+.nav-last-login {
+  font-size: 0.8rem;
+  color: #93c5fd; /* Light blue */
+  margin-right: 1.5rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .nav-last-login {
+    display: none;
+  }
+}
